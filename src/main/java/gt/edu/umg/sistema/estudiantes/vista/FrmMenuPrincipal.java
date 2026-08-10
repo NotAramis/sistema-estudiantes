@@ -17,6 +17,8 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
      */
     public FrmMenuPrincipal() {
         initComponents();
+        
+        this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
     }
 
     /**
@@ -28,63 +30,160 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        BtnEstudiantes = new javax.swing.JButton();
-        BtnFactura = new javax.swing.JButton();
+        jDesktopPane1 = new javax.swing.JDesktopPane();
+        jDesktopPane2 = new javax.swing.JDesktopPane();
+        jDesktopPane3 = new javax.swing.JDesktopPane();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu5 = new javax.swing.JMenu();
+        jMenu6 = new javax.swing.JMenu();
+        jDesktopPane4 = new javax.swing.JDesktopPane();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenu7 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+
+        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
+        jDesktopPane1.setLayout(jDesktopPane1Layout);
+        jDesktopPane1Layout.setHorizontalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jDesktopPane1Layout.setVerticalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jDesktopPane2Layout = new javax.swing.GroupLayout(jDesktopPane2);
+        jDesktopPane2.setLayout(jDesktopPane2Layout);
+        jDesktopPane2Layout.setHorizontalGroup(
+            jDesktopPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jDesktopPane2Layout.setVerticalGroup(
+            jDesktopPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jDesktopPane3Layout = new javax.swing.GroupLayout(jDesktopPane3);
+        jDesktopPane3.setLayout(jDesktopPane3Layout);
+        jDesktopPane3Layout.setHorizontalGroup(
+            jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jDesktopPane3Layout.setVerticalGroup(
+            jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        jMenu5.setText("File");
+        jMenuBar2.add(jMenu5);
+
+        jMenu6.setText("Edit");
+        jMenuBar2.add(jMenu6);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel1.setText("Sistema Universitario - Menú Principa");
+        jDesktopPane4.setLayout(new java.awt.BorderLayout());
 
-        BtnEstudiantes.setText("Gestión de Estudiantes");
-        BtnEstudiantes.addActionListener(this::BtnEstudiantesActionPerformed);
+        jMenu4.setText("Módulos");
 
-        BtnFactura.setText("Módulo de Facturación");
-        BtnFactura.addActionListener(this::BtnFacturaActionPerformed);
+        jMenuItem1.setText("Clientes");
+        jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
+        jMenu4.add(jMenuItem1);
+
+        jMenuItem2.setText("Productos");
+        jMenuItem2.addActionListener(this::jMenuItem2ActionPerformed);
+        jMenu4.add(jMenuItem2);
+
+        jMenuItem3.setText("Empleados");
+        jMenuItem3.addActionListener(this::jMenuItem3ActionPerformed);
+        jMenu4.add(jMenuItem3);
+
+        jMenuItem4.setText("Facturación");
+        jMenuItem4.addActionListener(this::jMenuItem4ActionPerformed);
+        jMenu4.add(jMenuItem4);
+
+        jMenuBar1.add(jMenu4);
+
+        jMenu7.setText("Estudiantes");
+
+        jMenuItem5.setText("Gestión de Estudiantes");
+        jMenuItem5.addActionListener(this::jMenuItem5ActionPerformed);
+        jMenu7.add(jMenuItem5);
+
+        jMenuBar1.add(jMenu7);
+
+        jMenu3.setText("Archivo");
+        jMenuBar1.add(jMenu3);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(91, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(85, 85, 85))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(BtnFactura)
-                            .addComponent(BtnEstudiantes))
-                        .addGap(208, 208, 208))))
+                .addContainerGap()
+                .addComponent(jDesktopPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1637, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jLabel1)
-                .addGap(42, 42, 42)
-                .addComponent(BtnEstudiantes)
-                .addGap(40, 40, 40)
-                .addComponent(BtnFactura)
-                .addContainerGap(135, Short.MAX_VALUE))
+                .addComponent(jDesktopPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 944, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BtnEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEstudiantesActionPerformed
-        FrmEstudiante ventanaEstudiantes = new FrmEstudiante();
-        ventanaEstudiantes.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_BtnEstudiantesActionPerformed
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+                                              
+        FrmCliente formCliente = new FrmCliente();
+        jDesktopPane4.add(formCliente); // Usa el número exacto que te generó NetBeans
+        formCliente.setSize(450, 350);
+        formCliente.setLocation(30, 30);
+        formCliente.setVisible(true);
 
-    private void BtnFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnFacturaActionPerformed
-        FrmFactura ventanaFactura = new FrmFactura();
-        ventanaFactura.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_BtnFacturaActionPerformed
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+       FrmProducto formProducto = new FrmProducto();
+jDesktopPane4.add(formProducto);
+formProducto.setSize(500, 400);
+formProducto.setLocation(30, 30);
+formProducto.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        FrmEmpleado formEmpleado = new FrmEmpleado();
+jDesktopPane4.add(formEmpleado);
+formEmpleado.setSize(500, 400);
+formEmpleado.setLocation(30, 30);
+formEmpleado.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        FrmFactura formFactura = new FrmFactura();
+jDesktopPane4.add(formFactura);
+formFactura.setSize(600, 450);
+formFactura.setLocation(30, 30);
+formFactura.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // Asegúrate de que FrmEstudiante ya exista como JInternalFrame
+FrmEstudiante formEstudiante = new FrmEstudiante(); 
+jDesktopPane4.add(formEstudiante);
+formEstudiante.setSize(500, 400);
+formEstudiante.setLocation(30, 30);
+formEstudiante.setVisible(true);
+formEstudiante.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -112,8 +211,21 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnEstudiantes;
-    private javax.swing.JButton BtnFactura;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JDesktopPane jDesktopPane2;
+    private javax.swing.JDesktopPane jDesktopPane3;
+    private javax.swing.JDesktopPane jDesktopPane4;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     // End of variables declaration//GEN-END:variables
 }
