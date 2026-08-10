@@ -4,22 +4,49 @@
  */
 package gt.edu.umg.sistema.estudiantes.modelo;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Factura {
-    private int id;
-    private String nit;
-    private String nombreCliente;
-    private double total;
+    private int idFactura;
+    private LocalDate fecha;
+    private Cliente cliente;
+    private List<DetalleFactura> detalles;
 
-    // Getters y Setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public Factura() {
+        this.detalles = new ArrayList<>();
+        this.fecha = LocalDate.now();
+    }
 
-    public String getNit() { return nit; }
-    public void setNit(String nit) { this.nit = nit; }
+    public Factura(int idFactura, Cliente cliente) {
+        this.idFactura = idFactura;
+        this.fecha = LocalDate.now();
+        this.cliente = cliente;
+        this.detalles = new ArrayList<>();
+    }
 
-    public String getNombreCliente() { return nombreCliente; }
-    public void setNombreCliente(String nombreCliente) { this.nombreCliente = nombreCliente; }
+    public void agregarDetalle(DetalleFactura detalle) {
+        this.detalles.add(detalle);
+    }
 
-    public double getTotal() { return total; }
-    public void setTotal(double total) { this.total = total; }
+    public double calcularTotal() {
+        double total = 0.0;
+        for (DetalleFactura detalle : detalles) {
+            total += detalle.calcularSubtotal();
+        }
+        return total;
+    }
+
+    public int getIdFactura() { return idFactura; }
+    public void setIdFactura(int idFactura) { this.idFactura = idFactura; }
+
+    public LocalDate getFecha() { return fecha; }
+    public void setFecha(LocalDate fecha) { this.fecha = fecha; }
+
+    public Cliente getCliente() { return cliente; }
+    public void setCliente(Cliente cliente) { this.cliente = cliente; }
+
+    public List<DetalleFactura> getDetalles() { return detalles; }
+    public void setDetalles(List<DetalleFactura> detalles) { this.detalles = detalles; }
 }
