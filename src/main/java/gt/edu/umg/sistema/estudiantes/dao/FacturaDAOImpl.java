@@ -8,7 +8,7 @@ import gt.edu.umg.sistema.estudiantes.modelo.Factura;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement; // Importante para recuperar el ID generado
+import java.sql.Statement;
 
 public class FacturaDAOImpl {
     
@@ -20,9 +20,10 @@ public class FacturaDAOImpl {
         try (Connection con = Conexion.getConnection();
              PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             
-            ps.setString(1, factura.getNit());
-            ps.setString(2, factura.getNombreCliente());
-            ps.setDouble(3, factura.getTotal());
+            // ¡Aquí está la magia! Ahora sacamos los datos navegando por el objeto Cliente
+            ps.setString(1, factura.getCliente().getNit());
+            ps.setString(2, factura.getCliente().getNombre());
+            ps.setDouble(3, factura.calcularTotal());
             ps.executeUpdate();
             
             // Obtenemos el ID autoincrementable de la factura recién insertada
@@ -34,10 +35,10 @@ public class FacturaDAOImpl {
         } catch (SQLException e) {
             System.out.println("Error al guardar la factura: " + e.getMessage());
         }
-        return idFacturaGenerada; // Retorna el ID para usarlo en el detalle
+        return idFacturaGenerada; 
     }
 
-    // NUEVO MÉTODO: Para guardar cada producto en la tabla detalle_factura
+    // Mantenemos este método igual para que coincida con tu base de datos actual
     public void guardarDetalle(int idFactura, String descripcion, int cantidad, double precio, double subtotal) {
         String sql = "INSERT INTO detalle_factura (id_factura, descripcion, cantidad, precio_unitario, subtotal) VALUES (?, ?, ?, ?, ?)";
         

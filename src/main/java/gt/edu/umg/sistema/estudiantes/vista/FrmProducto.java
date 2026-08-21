@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package gt.edu.umg.sistema.estudiantes.vista;
+import gt.edu.umg.sistema.estudiantes.controlador.ProductoController;
+import gt.edu.umg.sistema.estudiantes.modelo.Producto;
 
 /**
  *
@@ -12,17 +14,22 @@ public class FrmProducto extends javax.swing.JInternalFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmProducto.class.getName());
 
-    /**
-     * Creates new form FrmProducto
-     */
+    // 1. Declaras el controlador aquí
+    ProductoController controller;
+
     public FrmProducto() {
         initComponents();
+        
+        // 2. Lo inicializas aquí
+        controller = new ProductoController(); 
+        
+        refrescarTabla();
+        
         this.setClosable(true);
-    this.setIconifiable(true);
-    this.setMaximizable(true);
-    this.setResizable(true);
-    
-    this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        this.setIconifiable(true);
+        this.setMaximizable(true);
+        this.setResizable(true);
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -42,9 +49,10 @@ public class FrmProducto extends javax.swing.JInternalFrame {
         txtPrecio = new javax.swing.JTextField();
         txtExistencia = new javax.swing.JTextField();
         BtnGuardar = new javax.swing.JButton();
-        BtnRegresar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblProductos = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Registro de Productos");
@@ -62,66 +70,70 @@ public class FrmProducto extends javax.swing.JInternalFrame {
         BtnGuardar.setText("Guardar Producto");
         BtnGuardar.addActionListener(this::BtnGuardarActionPerformed);
 
-        BtnRegresar.setText("Regresar");
-        BtnRegresar.addActionListener(this::BtnRegresarActionPerformed);
+        tblProductos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblProductos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(103, 103, 103))
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addGap(334, 334, 334)
+                .addComponent(jLabel1)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(BtnRegresar)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtExistencia))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(231, 231, 231))
+                        .addContainerGap()
+                        .addComponent(jScrollPane1))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(BtnGuardar)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(234, 234, 234)
+                                .addComponent(jLabel2))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BtnGuardar)
+                            .addComponent(txtExistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 227, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(36, 36, 36)
+                .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtExistencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtExistencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addComponent(BtnGuardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BtnRegresar)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addGap(53, 53, 53)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -143,12 +155,14 @@ public class FrmProducto extends javax.swing.JInternalFrame {
 
         try {
             // Instanciamos el Producto
-            gt.edu.umg.sistema.estudiantes.modelo.Producto nuevoProducto = new gt.edu.umg.sistema.estudiantes.modelo.Producto();
+            Producto nuevoProducto = new Producto();
             nuevoProducto.setNombre(txtNombre.getText());
             nuevoProducto.setPrecio(Double.parseDouble(txtPrecio.getText()));
             nuevoProducto.setExistencia(Integer.parseInt(txtExistencia.getText()));
+            
+            controller.guardar(nuevoProducto);
 
-            javax.swing.JOptionPane.showMessageDialog(this, "¡Producto registrado con éxito!\n" + 
+            javax.swing.JOptionPane.showMessageDialog(this, "¡Producto guardado en la base de datos con éxito!\n" + 
                     "Nombre: " + nuevoProducto.getNombre() + "\n" +
                     "Precio: Q" + nuevoProducto.getPrecio() + "\n" +
                     "Stock: " + nuevoProducto.getExistencia());
@@ -158,28 +172,54 @@ public class FrmProducto extends javax.swing.JInternalFrame {
             txtPrecio.setText("");
             txtExistencia.setText("");
             
+            refrescarTabla();
+            
         } catch (NumberFormatException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Error: Ingrese valores numéricos válidos en Precio y Existencia.");
         }
     }//GEN-LAST:event_BtnGuardarActionPerformed
 
-    private void BtnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegresarActionPerformed
-       FrmMenuPrincipal menu = new FrmMenuPrincipal();
-        menu.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_BtnRegresarActionPerformed
+    public void cargarDatosTabla(java.util.List<Producto> listaProductos) {
+        String[] columnas = {"ID", "Nombre", "Precio (Q)", "Existencia"};
+        javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(columnas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; 
+            }
+        };
 
+        for (Producto prod : listaProductos) {
+            Object[] fila = {
+                prod.getIdProducto(), 
+                prod.getNombre(),
+                prod.getPrecio(),
+                prod.getExistencia()
+            };
+            modelo.addRow(fila);
+        }
+        tblProductos.setModel(modelo);
+    }
+
+    private void refrescarTabla() {
+        try {
+            cargarDatosTabla(controller.getProductos());
+        } catch (Exception e) {
+            System.err.println("Error al cargar datos: " + e.getMessage());
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnGuardar;
-    private javax.swing.JButton BtnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblProductos;
     private javax.swing.JTextField txtExistencia;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPrecio;

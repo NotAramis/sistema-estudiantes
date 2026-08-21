@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package gt.edu.umg.sistema.estudiantes.vista;
+import gt.edu.umg.sistema.estudiantes.controlador.EmpleadoController;
+import gt.edu.umg.sistema.estudiantes.modelo.Empleado;
 
 /**
  *
@@ -12,18 +14,22 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmEmpleado.class.getName());
 
-    /**
-     * Creates new form FrmEmpleado
-     */
+    // 1. Declaras el controlador aquí
+    EmpleadoController controller;
+
     public FrmEmpleado() {
         initComponents();
         
+        // 2. Lo inicializas aquí
+        controller = new EmpleadoController(); 
+        
+        refrescarTabla();
+        
         this.setClosable(true);
-    this.setIconifiable(true);
-    this.setMaximizable(true);
-    this.setResizable(true);
-      
-    this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        this.setIconifiable(true);
+        this.setMaximizable(true);
+        this.setResizable(true);
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -42,9 +48,10 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
         txtCodigoEmpleado = new javax.swing.JTextField();
         txtPuesto = new javax.swing.JTextField();
         BtnGuardar = new javax.swing.JButton();
-        BtnRegresar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblEmpleados = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Nombre del Empleado:");
 
@@ -55,8 +62,18 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
         BtnGuardar.setText("Guardar Empleado");
         BtnGuardar.addActionListener(this::BtnGuardarActionPerformed);
 
-        BtnRegresar.setText("Regresar");
-        BtnRegresar.addActionListener(this::BtnRegresarActionPerformed);
+        tblEmpleados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblEmpleados);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -65,24 +82,20 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 709, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addGap(84, 84, 84)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCodigoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(BtnGuardar)
-                                .addGap(40, 40, 40)
-                                .addComponent(BtnRegresar))
-                            .addComponent(txtPuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(19, Short.MAX_VALUE))
+                            .addComponent(txtCodigoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BtnGuardar))))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,10 +113,10 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
                     .addComponent(jLabel3)
                     .addComponent(txtPuesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BtnGuardar)
-                    .addComponent(BtnRegresar))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addComponent(BtnGuardar)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
@@ -115,40 +128,67 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
             return;
         }
 
-        // Instanciamos el Empleado usando los campos de tu UML
-        gt.edu.umg.sistema.estudiantes.modelo.Empleado nuevoEmpleado = new gt.edu.umg.sistema.estudiantes.modelo.Empleado();
-        nuevoEmpleado.setNombre(txtNombre.getText()); // Este viene heredado de Persona
-        nuevoEmpleado.setCodigoEmpleado(txtCodigoEmpleado.getText()); // Campo de tu diagrama
-        nuevoEmpleado.setPuesto(txtPuesto.getText()); // Campo de tu diagrama
+        Empleado nuevoEmpleado = new Empleado();
+        nuevoEmpleado.setNombre(txtNombre.getText());
+        nuevoEmpleado.setCodigoEmpleado(txtCodigoEmpleado.getText());
+        nuevoEmpleado.setPuesto(txtPuesto.getText());
+        
+        nuevoEmpleado.setNit("");
+        nuevoEmpleado.setTelefono("");
+        
+        controller.guardar(nuevoEmpleado);
 
         // Usamos el método polimórfico que pide tu UML
-        javax.swing.JOptionPane.showMessageDialog(this, "¡Empleado registrado con éxito!\n" + nuevoEmpleado.mostrarInformacion());
+        javax.swing.JOptionPane.showMessageDialog(this, "¡Empleado guardado en la base de datos con éxito!\n" + nuevoEmpleado.mostrarInformacion());
 
         // Limpiamos los campos
         txtNombre.setText("");
         txtCodigoEmpleado.setText("");
         txtPuesto.setText("");
+        
+        refrescarTabla();
     }//GEN-LAST:event_BtnGuardarActionPerformed
 
-    private void BtnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegresarActionPerformed
-                                        
-        FrmMenuPrincipal menu = new FrmMenuPrincipal();
-        menu.setVisible(true);
-        
-        // Cerramos el formulario de empleados actual
-        this.dispose(); 
-    }//GEN-LAST:event_BtnRegresarActionPerformed
+    public void cargarDatosTabla(java.util.List<Empleado> listaEmpleados) {
+        String[] columnas = {"ID", "Código", "Nombre", "Puesto"};
+        javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(columnas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; 
+            }
+        };
 
+        for (Empleado emp : listaEmpleados) {
+            Object[] fila = {
+                emp.getId(),
+                emp.getCodigoEmpleado(),
+                emp.getNombre(),
+                emp.getPuesto()
+            };
+            modelo.addRow(fila);
+        }
+        tblEmpleados.setModel(modelo);
+    }
+
+    private void refrescarTabla() {
+        try {
+            cargarDatosTabla(controller.getEmpleados());
+        } catch (Exception e) {
+            System.err.println("Error al cargar datos: " + e.getMessage());
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnGuardar;
-    private javax.swing.JButton BtnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblEmpleados;
     private javax.swing.JTextField txtCodigoEmpleado;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPuesto;

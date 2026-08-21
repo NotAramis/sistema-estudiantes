@@ -12,13 +12,72 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmMenuPrincipal.class.getName());
 
-    /**
-     * Creates new form FrmMenuPrincipal
-     */
-    public FrmMenuPrincipal() {
+    // Método para abrir los formularios como pestañas web
+  public FrmMenuPrincipal() {
         initComponents();
         
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+    }
+
+    // Método para abrir los formularios como pestañas web con botón de cerrar
+    private void abrirFormularioEnPestaña(javax.swing.JInternalFrame frm, String titulo) {
+        // 1. Verificamos si la pestaña ya existe para no abrirla repetida
+        for (int i = 0; i < jTabbedPane1.getTabCount(); i++) {
+            // Se le agrega un pequeño espacio al título para compararlo correctamente con el que tiene la "X"
+            if (jTabbedPane1.getTitleAt(i).trim().equals(titulo.trim())) {
+                jTabbedPane1.setSelectedIndex(i); 
+                return; 
+            }
+        }
+        
+        // 2. Le quitamos la barra superior al JInternalFrame y los bordes
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) frm.getUI()).setNorthPane(null);
+        frm.setBorder(null);
+        
+        // 3. Agregamos el formulario a la pestaña
+        jTabbedPane1.addTab(titulo + "  ", frm); // Agregamos espacio para que no quede pegado a la X
+        int index = jTabbedPane1.indexOfComponent(frm); 
+        
+        // --- CÓDIGO PARA DIBUJAR LA "X" DE CERRAR ---
+        javax.swing.JPanel pnlPestaña = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 0, 0));
+        pnlPestaña.setOpaque(false);
+        
+        javax.swing.JLabel lblTitulo = new javax.swing.JLabel(titulo + "  ");
+        pnlPestaña.add(lblTitulo);
+        
+        javax.swing.JButton btnCerrar = new javax.swing.JButton("x");
+        btnCerrar.setPreferredSize(new java.awt.Dimension(17, 17));
+        btnCerrar.setBorderPainted(false);
+        btnCerrar.setContentAreaFilled(false);
+        btnCerrar.setFocusable(false);
+        
+        // Acción para cerrar la pestaña
+        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTabbedPane1.remove(frm);
+            }
+        });
+        
+        // Efecto visual al pasar el mouse
+        btnCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCerrar.setForeground(java.awt.Color.RED);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnCerrar.setForeground(java.awt.Color.BLACK);
+            }
+        });
+        
+        pnlPestaña.add(btnCerrar);
+        
+        jTabbedPane1.setTabComponentAt(index, pnlPestaña);
+        // -------------------------------------------
+        
+        // 4. Seleccionamos la pestaña recién creada 
+        jTabbedPane1.setSelectedComponent(frm);
+        
+        // 5. Hacemos visible el formulario
+        frm.setVisible(true);
     }
 
     /**
@@ -36,7 +95,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu5 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
-        jDesktopPane4 = new javax.swing.JDesktopPane();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -88,8 +147,6 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jDesktopPane4.setLayout(new java.awt.BorderLayout());
-
         jMenu4.setText("Módulos");
 
         jMenuItem1.setText("Clientes");
@@ -127,62 +184,41 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jDesktopPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1637, Short.MAX_VALUE))
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1643, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jDesktopPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 944, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 944, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-                                              
+                                             
         FrmCliente formCliente = new FrmCliente();
-        jDesktopPane4.add(formCliente); // Usa el número exacto que te generó NetBeans
-        formCliente.setSize(450, 350);
-        formCliente.setLocation(30, 30);
-        formCliente.setVisible(true);
-
+        abrirFormularioEnPestaña(formCliente, "Gestión de Clientes");
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
        FrmProducto formProducto = new FrmProducto();
-jDesktopPane4.add(formProducto);
-formProducto.setSize(500, 400);
-formProducto.setLocation(30, 30);
-formProducto.setVisible(true);
+        abrirFormularioEnPestaña(formProducto, "Gestión de Productos");
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         FrmEmpleado formEmpleado = new FrmEmpleado();
-jDesktopPane4.add(formEmpleado);
-formEmpleado.setSize(500, 400);
-formEmpleado.setLocation(30, 30);
-formEmpleado.setVisible(true);
+        abrirFormularioEnPestaña(formEmpleado, "Gestión de Empleados");
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         FrmFactura formFactura = new FrmFactura();
-jDesktopPane4.add(formFactura);
-formFactura.setSize(600, 450);
-formFactura.setLocation(30, 30);
-formFactura.setVisible(true);
+        abrirFormularioEnPestaña(formFactura, "Módulo de Facturación");
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // Asegúrate de que FrmEstudiante ya exista como JInternalFrame
-FrmEstudiante formEstudiante = new FrmEstudiante(); 
-jDesktopPane4.add(formEstudiante);
-formEstudiante.setSize(500, 400);
-formEstudiante.setLocation(30, 30);
-formEstudiante.setVisible(true);
-formEstudiante.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        FrmEstudiante formEstudiante = new FrmEstudiante(); 
+        abrirFormularioEnPestaña(formEstudiante, "Gestión de Estudiantes");
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
@@ -214,7 +250,6 @@ formEstudiante.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_C
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JDesktopPane jDesktopPane3;
-    private javax.swing.JDesktopPane jDesktopPane4;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
@@ -227,5 +262,6 @@ formEstudiante.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_C
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,7 +4,7 @@
  */
 package gt.edu.umg.sistema.estudiantes.vista;
 
-import gt.edu.umg.sistema.estudiantes.dao.FacturaDAOImpl;
+import gt.edu.umg.sistema.estudiantes.controlador.FacturaController;
 import gt.edu.umg.sistema.estudiantes.modelo.Factura;
 
 /**
@@ -15,11 +15,14 @@ public class FrmFactura extends javax.swing.JInternalFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmFactura.class.getName());
 
-    /**
-     * Creates new form FrmFactura
-     */
+    FacturaController controller;
+    
     public FrmFactura() {
         initComponents();
+        
+        controller = new FacturaController(); 
+        
+        this.setClosable(true);
         
         this.setClosable(true);
     this.setIconifiable(true);
@@ -67,7 +70,6 @@ public class FrmFactura extends javax.swing.JInternalFrame {
         jTable2 = new javax.swing.JTable();
         BtnAgregar = new javax.swing.JButton();
         BtnGuardar = new javax.swing.JButton();
-        BtnRegresar = new javax.swing.JButton();
         lblTotalGeneral = new javax.swing.JLabel();
         lblFecha = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -86,7 +88,7 @@ public class FrmFactura extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Módulo de Facturación");
@@ -122,9 +124,6 @@ public class FrmFactura extends javax.swing.JInternalFrame {
 
         BtnGuardar.setText("Guardar Factura");
         BtnGuardar.addActionListener(this::BtnGuardarActionPerformed);
-
-        BtnRegresar.setText("Regresar al Menú");
-        BtnRegresar.addActionListener(this::BtnRegresarActionPerformed);
 
         lblTotalGeneral.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         lblTotalGeneral.setText("Total: Q. 0.00");
@@ -165,15 +164,12 @@ public class FrmFactura extends javax.swing.JInternalFrame {
                         .addComponent(txtNombreCliente)
                         .addGap(58, 58, 58))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(BtnEliminar)
-                        .addGap(18, 18, 18)
-                        .addComponent(BtnAgregar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(BtnRegresar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BtnGuardar)
-                        .addGap(85, 85, 85))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(BtnEliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(BtnAgregar)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -220,7 +216,6 @@ public class FrmFactura extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnAgregar)
-                    .addComponent(BtnRegresar)
                     .addComponent(BtnGuardar)
                     .addComponent(BtnEliminar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -232,12 +227,6 @@ public class FrmFactura extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void BtnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegresarActionPerformed
-        FrmMenuPrincipal menu = new FrmMenuPrincipal();
-        menu.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_BtnRegresarActionPerformed
 
     private void BtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgregarActionPerformed
         javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTable2.getModel();
@@ -298,8 +287,8 @@ calcularTotalGeneral();
         }
 
         // 3. Guardar la factura principal usando el DAO
-        FacturaDAOImpl dao = new FacturaDAOImpl();
-        int idFactura = dao.guardarFactura(fac);
+       
+        int idFactura = controller.guardarCabecera(fac);
 
        if (idFactura > 0) {
             // Guardar cada fila en la base de datos 'detalle_factura'
@@ -309,7 +298,8 @@ calcularTotalGeneral();
                 double precio = Double.parseDouble(modelo.getValueAt(i, 2).toString());
                 double subtotal = Double.parseDouble(modelo.getValueAt(i, 3).toString());
 
-                dao.guardarDetalle(idFactura, desc, cant, precio, subtotal);
+                // Usamos el controlador en lugar del DAO
+                controller.guardarDetalle(idFactura, desc, cant, precio, subtotal);
             }
 
             // 3. Mostramos mensaje de éxito
@@ -409,7 +399,6 @@ calcularTotalGeneral();
     private javax.swing.JButton BtnAgregar;
     private javax.swing.JButton BtnEliminar;
     private javax.swing.JButton BtnGuardar;
-    private javax.swing.JButton BtnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

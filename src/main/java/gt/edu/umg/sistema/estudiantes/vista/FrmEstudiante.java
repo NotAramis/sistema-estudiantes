@@ -63,9 +63,8 @@ public class FrmEstudiante extends javax.swing.JInternalFrame {
         chkEstado = new javax.swing.JCheckBox();
         BtnEliminar = new javax.swing.JButton();
         BtnActualizar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblnombres.setText("Nombres");
 
@@ -111,9 +110,6 @@ public class FrmEstudiante extends javax.swing.JInternalFrame {
         BtnActualizar.setText("Actualizar");
         BtnActualizar.addActionListener(this::BtnActualizarActionPerformed);
 
-        jButton1.setText("Regresar al Menú");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -141,13 +137,11 @@ public class FrmEstudiante extends javax.swing.JInternalFrame {
                                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtCarnet, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(BtnGrabar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(BtnActualizar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(BtnEliminar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(BtnGrabar))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(BtnEliminar))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(33, 33, 33)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -182,7 +176,6 @@ public class FrmEstudiante extends javax.swing.JInternalFrame {
                     .addComponent(chkEstado))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
                     .addComponent(BtnActualizar)
                     .addComponent(BtnEliminar)
                     .addComponent(BtnGrabar))
@@ -302,12 +295,6 @@ JOptionPane.showMessageDialog(this, "Estudiante actualizado con éxito.");
         }
     }//GEN-LAST:event_BtnEliminarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        FrmMenuPrincipal menu = new FrmMenuPrincipal();
-    menu.setVisible(true);
-    this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void limpiarCampos() {
         txtNombres.setText("");
         txtApellidos.setText("");
@@ -333,7 +320,6 @@ JOptionPane.showMessageDialog(this, "Estudiante actualizado con éxito.");
     private javax.swing.JButton BtnGrabar;
     private javax.swing.JComboBox<String> cbxCarrera;
     private javax.swing.JCheckBox chkEstado;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;

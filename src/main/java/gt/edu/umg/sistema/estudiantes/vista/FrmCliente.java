@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package gt.edu.umg.sistema.estudiantes.vista;
+import gt.edu.umg.sistema.estudiantes.controlador.ClienteController;
+import gt.edu.umg.sistema.estudiantes.modelo.Cliente;
 
 /**
  *
@@ -11,18 +13,23 @@ package gt.edu.umg.sistema.estudiantes.vista;
 public class FrmCliente extends javax.swing.JInternalFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmCliente.class.getName());
+    
+    // 1. Declaras el controlador aquí
+    ClienteController controller;
 
-    /**
-     * Creates new form FrmCliente
-     */
     public FrmCliente() {
         initComponents();
+        
+        // 2. Lo inicializas aquí
+        controller = new ClienteController(); 
+        
+        refrescarTabla();
+        
         this.setClosable(true);
-    this.setIconifiable(true);
-    this.setMaximizable(true);
-    this.setResizable(true);
-      
-    this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        this.setIconifiable(true);
+        this.setMaximizable(true);
+        this.setResizable(true);
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -44,9 +51,10 @@ public class FrmCliente extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
         BtnGuardar = new javax.swing.JButton();
-        BtnRegresar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblClientes = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Registro de Clientes");
@@ -64,38 +72,49 @@ public class FrmCliente extends javax.swing.JInternalFrame {
         BtnGuardar.setText("Guardar Cliente");
         BtnGuardar.addActionListener(this::BtnGuardarActionPerformed);
 
-        BtnRegresar.setText("Regresar al Menú");
-        BtnRegresar.addActionListener(this::BtnRegresarActionPerformed);
+        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblClientes);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel2)
-                                .addComponent(jLabel4)
-                                .addComponent(jLabel5))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtTelefono, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                                    .addComponent(txtNit, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(128, 128, 128)
-                                    .addComponent(jLabel1))))
-                        .addComponent(BtnGuardar))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(BtnRegresar)
-                        .addGap(376, 376, 376)))
-                .addContainerGap(30, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(316, 316, 316)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(115, 115, 115)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNit, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(BtnGuardar))))
+                        .addGap(0, 165, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,11 +137,11 @@ public class FrmCliente extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(26, 26, 26)
                 .addComponent(BtnGuardar)
                 .addGap(18, 18, 18)
-                .addComponent(BtnRegresar)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
+                .addGap(39, 39, 39))
         );
 
         pack();
@@ -138,43 +157,70 @@ public class FrmCliente extends javax.swing.JInternalFrame {
             return;
         }
 
-        // Instanciamos la clase Cliente que creamos para el UML
-        gt.edu.umg.sistema.estudiantes.modelo.Cliente nuevoCliente = new gt.edu.umg.sistema.estudiantes.modelo.Cliente();
+        Cliente nuevoCliente = new Cliente();
         nuevoCliente.setNombre(txtNombre.getText());
         nuevoCliente.setNit(txtNit.getText());
         nuevoCliente.setTelefono(txtTelefono.getText());
         nuevoCliente.setDireccion(txtDireccion.getText());
+        
+        controller.guardar(nuevoCliente);
 
         // Mostramos un mensaje usando el método polimórfico de la clase
-        javax.swing.JOptionPane.showMessageDialog(this, "¡Cliente registrado con éxito!\n" + nuevoCliente.mostrarInformacion());
+        javax.swing.JOptionPane.showMessageDialog(this, "¡Cliente guardado en la base de datos con éxito!\n" + nuevoCliente.mostrarInformacion());
 
         // Limpiamos los campos
         txtNombre.setText("");
         txtNit.setText("");
         txtTelefono.setText("");
         txtDireccion.setText("");
+        
+        refrescarTabla();
     
     }//GEN-LAST:event_BtnGuardarActionPerformed
 
-    private void BtnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegresarActionPerformed
-                                                   
-        FrmMenuPrincipal menu = new FrmMenuPrincipal();
-        menu.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_BtnRegresarActionPerformed
+    public void cargarDatosTabla(java.util.List<Cliente> listaClientes) {
+        String[] columnas = {"ID", "NIT", "Nombre", "Teléfono", "Dirección"};
+        javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(columnas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; 
+            }
+        };
 
+        for (Cliente cliente : listaClientes) {
+            Object[] fila = {
+                cliente.getId(),
+                cliente.getNit(),
+                cliente.getNombre(),
+                cliente.getTelefono(),
+                cliente.getDireccion()
+            };
+            modelo.addRow(fila);
+        }
+        tblClientes.setModel(modelo);
+    }
+
+    private void refrescarTabla() {
+        try {
+            cargarDatosTabla(controller.getClientes());
+        } catch (Exception e) {
+            System.err.println("Error al cargar datos: " + e.getMessage());
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnGuardar;
-    private javax.swing.JButton BtnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblClientes;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtNit;
     private javax.swing.JTextField txtNombre;
